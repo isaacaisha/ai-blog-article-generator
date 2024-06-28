@@ -79,9 +79,20 @@ def get_transcription(link):
     audio_file = download_audio(link)
     aai.settings.api_key = os.getenv('AAI_API_KEY')
 
-    transcriber = aai.Transcriber()
-    transcript = transcriber.transcribe(audio_file)
-    return transcript.text
+    try:
+        transcriber = aai.Transcriber()
+        transcript = transcriber.transcribe(audio_file)
+        transcription_text = transcript.text
+    except Exception as e:
+        print(f"Error during transcription: {str(e)}")
+        transcription_text = None
+    finally:
+        # Remove the audio file after processing
+        if os.path.exists(audio_file):
+            os.remove(audio_file)
+            print(f"Deleted audio file: {audio_file}")
+
+    return transcription_text
 
 
 def generate_blog_from_transcription(transcription):

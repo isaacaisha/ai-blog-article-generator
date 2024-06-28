@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}AI Blog Generator{% endblock %}</title>
-    {% block favicon %}<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.ico' %}">{% endblock %}
+    {% block favicon %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.ico' %}">{% endblock %}
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <!--<script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -19,7 +20,7 @@
                 },
             },
         }
-    </script>
+    </script>-->
     <style>
         @keyframes rotate {
             from {
@@ -29,6 +30,9 @@
             to {
                 transform: rotate(360deg);
             }
+        }
+        .purple {
+            color: rgb(168 85 247 / var(--tw-text-opacity));;
         }
 
         .load {
@@ -61,29 +65,32 @@
     </style>
 </head>
 
-<body class="flex flex-col bg-gray-200 font-sans antialiased"> <!-- min-h-screen -->
+<body class="flex flex-col min-h-screen bg-gray-200 font-sans antialiased">
 
     <!-- Navbar block -->
     {% block navbar %}
-    <nav class="bg-gray-600 p-4 text-white flex justify-between">
-        <div>
-            <h1 class="text-3xl font-bold text-purple">AI Blog Generator</h1>
-        </div>
-        <div>
-            <a href="#" class="text-white hover:underline mx-4">Welcome {{user.username}}</a>
-            <a href="/blog-posts" class="text-white hover:underline mx-4">Saved Blog Posts</a>
-            <a href="/logout" class="text-white hover:underline">Logout</a>
+    <nav class="bg-gray-700 p-4 text-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-purple-500">AI Blog Generator</h1>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="/blog-posts" class="text-white hover:text-purple-300">Saved Posts</a>
+                <a href="/logout" class="text-white hover:text-purple-300">Logout</a>
+            </div>
         </div>
     </nav>
     {% endblock %}
 
     <!-- Content block -->
-    <div class="flex-grow mt-3">
+    <div class="flex-grow mt-6 container mx-auto px-2 sm:px-6 lg:px-8">
         {% if error_message %}
-        <div align="center" style="color: crimson;">
+        <div class="text-center text-red-600">
             <h2>{{ error_message }}</h2>
         </div>
         {% endif %}
+
+        <span class="text-blue-700 hover:text-purple-700">Welcome {{user.username}}</span>
 
         {% block content %}
         <!-- This block will be overridden by child templates -->
@@ -91,9 +98,9 @@
     </div>
 
     <!-- Footer -->
-    <footer class="text-center p-4 text-black mt-10">
-        Powered by 
-        <a href="https://siisi-ai.online/" target="_blank" class="text-clifford hover:underline">
+    <footer class="bg-gray-700 text-center p-4 text-white mt-10">
+        Powered by
+        <a href="https://siisi-ai.online/" target="_blank" class="text-purple-500 hover:underline">
             ·SìįSí·Dbt·
         </a>
     </footer>
