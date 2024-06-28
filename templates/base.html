@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Blog Generator{% endblock %}</title>
+    {% block favicon %}<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.ico' %}">{% endblock %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: "purple",
+                        purple: "purple"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .load {
+            width: 100px;
+            height: 100px;
+            margin: 110px auto 0;
+            border: solid 10px #8822aa;
+            border-radius: 50%;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            -webkit-transition: all 0.5s ease-in;
+            -webkit-animation-name: rotate;
+            -webkit-animation-duration: 1.0s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+            transition: all 0.5s ease-in;
+            animation-name: rotate;
+            animation-duration: 1.0s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .loading {
+            border: 0.1rem solid #AEFAFC;
+            border-radius: 2.3rem;
+            margin: 0 auto 0;
+            padding: 0.3rem;
+            width: 3.7rem;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col bg-gray-200 font-sans antialiased"> <!-- min-h-screen -->
+
+    <!-- Navbar block -->
+    {% block navbar %}
+    <nav class="bg-gray-600 p-4 text-white flex justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-purple">AI Blog Generator</h1>
+        </div>
+        <div>
+            <a href="#" class="text-white hover:underline mx-4">Welcome {{user.username}}</a>
+            <a href="/blog-posts" class="text-white hover:underline mx-4">Saved Blog Posts</a>
+            <a href="/logout" class="text-white hover:underline">Logout</a>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <!-- Content block -->
+    <div class="flex-grow mt-3">
+        {% if error_message %}
+        <div align="center" style="color: crimson;">
+            <h2>{{ error_message }}</h2>
+        </div>
+        {% endif %}
+
+        {% block content %}
+        <!-- This block will be overridden by child templates -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 text-black mt-10">
+        Powered by 
+        <a href="https://siisi-ai.online/" target="_blank" class="text-clifford hover:underline">
+            ·SìįSí·Dbt·
+        </a>
+    </footer>
+
+</body>
+
+</html>

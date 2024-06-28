@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Blog Generator{% endblock %}
+
+{% block favicon %}
+    {% load static %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon5.ico' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<div class="container mx-auto mt-10 px-4 sm:px-0">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
+
+        <!-- Introduction section -->
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-semibold mb-4">Welcome to the AI Blog Generator</h2>
+            <p class="text-gray-700">
+                Generate high-quality blog articles from YouTube videos using artificial intelligence.
+                Simply enter the link to the YouTube video below
+                and let the AI create the content for you ¡!¡
+            </p>
+        </div>
+
+        <!-- YouTube section -->
+        <div>
+            <h2 class="text-xl mb-4 font-semibold">Enter YouTube Video Link</h2>
+            <div class="flex space-x-2">
+                <input id="youtubeLink" type="url" placeholder="Paste YouTube Link..."
+                    class="flex-grow p-1 border border-clifford-400 rounded-l-md">
+
+                <button id="generateBlogButton"
+                    class="bg-gray-400 text-clifford px-2 py-2 rounded-r-md hover:bg-gray-500 transition-colors">
+                    Generate
+                </button>
+            </div>
+        </div>
+
+        <!-- Section for loading circle -->
+        <div id="loading-circle" class="load mb-3" style="display: none;"></div>
+
+        <div id="loading-indicator" style="display:none;" class="mb-3">
+            <p class="text-center">Loading...</p>
+            <img class="loading" src="https://media1.giphy.com/media/VseXvvxwowwCc/200w.webp?cid=ecf05e47bx13l0iyjnyo8e0dxaumajijmsz83lk4bl8kow3w&ep=v1_gifs_search&rid=200w.webp&ct=g" alt="Loading">
+        </div>
+
+        <!-- Generated Blog Display Section -->
+        <section class="mt-10">
+            <h2 class="text-xl mb-4 font-semibold">Generated Blog Article</h2>
+            <div id="blogContent" class="mt-2 text-gray-700 space-y-4"></div>
+        </section>
+    </div>
+</div>
+
+<script>
+        document.getElementById('generateBlogButton').addEventListener('click', async () => {
+
+
+            const youtubeLink = document.getElementById('youtubeLink').value;
+            const blogContent = document.getElementById('blogContent');
+            
+            if(youtubeLink) {
+                document.getElementById('loading-circle').style.display = 'block';
+                document.getElementById('loading-indicator').style.display = 'block';
+
+                blogContent.innerHTML = ''; // Clear previous content
+
+                const endpointUrl = '/generate-blog';
+                
+                try {
+                    const response = await fetch(endpointUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ link: youtubeLink })
+                    });
+
+                    const data = await response.json();
+
+                    blogContent.innerHTML = data.content;
+
+                } catch (error) {
+                    console.error("Error occurred:", error);
+                    alert("Something went wrong. Please try again later.");
+                    
+                }
+                document.getElementById('loading-circle').style.display = 'none';
+                document.getElementById('loading-indicator').style.display = 'none';
+            } else {
+                alert("Please enter a YouTube link.");
+            }
+        });
+</script>
+
+{% endblock %}

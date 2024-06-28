@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block navbar %}
+<!-- Customized navbar for signup page -->
+<nav class="bg-gray-600 p-4 text-white flex justify-between">
+    <div>
+        <h1 class="text-3xl font-bold text-purple">AI Blog Signup</h1>
+    </div>
+    <div>
+        <a href="/login" class="text-white hover:underline">Login</a> - 
+        <a href="/signup" class="text-white hover:underline">Signup</a>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center container mx-auto mt-10 px-4 sm:px-0">
+    <div class="bg-white p-8 shadow-md rounded-lg max-w-md w-full transition-transform transform hover:scale-105">
+        <!-- Signup form -->
+        <form action="" method="POST" class="space-y-4">
+            {% csrf_token %}
+
+            <h2 class="text-xl font-semibold">Signup</h2>
+            <div>
+                <label for="username" class="block mb-1 font-medium">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username..."
+                    class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label for="email" class="block mb-1 font-medium">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email..."
+                    class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label for="password" class="block mb-1 font-medium">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password..."
+                    class="w-full p-2 border rounded">
+            </div>
+            <div>
+                <label for="confirmPassword" class="block mb-1 font-medium">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword"
+                    placeholder="Confirm your password..." class="w-full p-2 border rounded">
+            </div>
+            <button type="submit" class="w-full bg-gray-400 text-purple p-2 rounded hover:bg-gray-500">
+                Signup
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

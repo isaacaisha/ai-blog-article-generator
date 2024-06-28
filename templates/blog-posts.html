@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}All Blog Posts{% endblock %}
+
+{% block favicon %}
+    {% load static %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon3.ico' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Main content -->
+    <div class="container mx-auto mt-10 px-4 sm:px-0">
+        <div class="max-w-3xl mx-auto bg-gray-300 p-6 rounded-lg shadow-md transition-transform transform hover:scale-105">
+            <!-- Blog posts section -->
+            <section>
+                <h2 class="text-xl mb-4 font-semibold">All Blog Posts</h2>
+                <div class="space-y-4">
+
+                    {% for article in blog_articles reversed %}
+                    <a href="/blog-details/{{article.id}}">
+                        <div class="border border-gray-400 p-4 rounded-lg">
+                            <h3 class="text-lg font-semibold">{{article.youtube_title}}</h3>
+                            <p>
+                                {{article.generated_content|truncatechars:73}}
+                            </p>
+                        </div>
+                        <br>
+                    </a>
+                    {% endfor %}
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+{% endblock %}
